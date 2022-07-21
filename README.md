@@ -1,39 +1,23 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+## Mert
+This package helps you about request, decode response and creating sdk.
 
 ```dart
-const like = 'sample';
+library mert;
+
+import 'package:mert/decoder_extensions.dart';
+import 'package:mert/request_helper.dart';
+
+//This is example implementation of MertBase
+class Mert extends MertBase {
+  Mert() : super(base: 'api.github.com');
+
+  Future<String> getGithubProfileUrl(String username) async {
+    final resp = await request(RequestType.GET, '/users/$username');
+    final decoded = resp.decodeMap();
+    return decoded['html_url'];
+  }
+}
+
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Create your own class and functions

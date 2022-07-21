@@ -3,7 +3,7 @@ library mert;
 import 'package:mert/decoder_extensions.dart';
 import 'package:mert/request_helper.dart';
 
-//This is example implementation of MertRequestHelper
+//This is example implementation of MertBase
 class Mert extends MertBase {
   Mert() : super(base: 'api.github.com');
 
