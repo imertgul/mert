@@ -4,13 +4,14 @@ import 'package:http/http.dart' as http;
 // ignore_for_file: constant_identifier_names
 enum RequestType { GET, PUT, DELETE, POST, PATCH }
 
-abstract class MertBase {
+abstract class Mert {
   final String base;
-  const MertBase({this.base = 'localhost'});
+  const Mert({this.base = 'localhost'});
 
   Future<http.Response> request(
     RequestType type,
     String path, {
+    bool https = true,
     Object? data = '',
     Map<String, dynamic>? queryParameters,
     String contentType = 'application/json',
@@ -18,7 +19,12 @@ abstract class MertBase {
     String? token,
     String tokenPrefix = 'Bearer',
   }) async {
-    final url = Uri.http(base, path, queryParameters);
+    late final Uri url;
+    if (https) {
+      url = Uri.https(base, path, queryParameters);
+    } else {
+      url = Uri.http(base, path, queryParameters);
+    }
 
     final headers = <String, String>{};
     if (token != null) {
