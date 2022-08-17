@@ -57,4 +57,25 @@ abstract class MertBase {
       throw Exception(e.toString() + s.toString());
     }
   }
+
+  Future<void> multiPartRequest(
+    RequestType type,
+    String path, 
+    String filePath, {
+    Map<String, String>? data,
+    Map<String, dynamic>? queryParameters,
+    String contentType = 'application/json',
+    String accept = 'text/plain',
+    String? token,
+    String tokenPrefix = 'Bearer',
+  }) async {
+    final url = Uri.http(base, path, queryParameters);
+    var request = http.MultipartRequest(type.toString().split('.').last, url)
+      ..fields.addAll(data!)
+      ..files.add(await http.MultipartFile.fromPath(
+          'package', filePath,
+          contentType: MediaType('application', 'x-tar')));
+    var response = await request.send();
+    if (response.statusCode == 200) print('Uploaded!');
+  }
 }
